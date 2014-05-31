@@ -10,10 +10,10 @@ package in.allmyspce.app.Model;
 public class FileDetails {
     String rid;
     String lid;
-    String mt;
+    long mt;
     String sl;
 
-    public FileDetails(String rid, String lid, String mt, String sl) {
+    public FileDetails(String rid, String lid, long mt, String sl) {
         this.rid = rid;
         this.lid = lid;
         this.mt = mt;

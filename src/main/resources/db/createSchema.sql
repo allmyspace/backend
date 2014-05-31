@@ -8,11 +8,11 @@ dropboxtoken_created_at int(11),
 boxtoken_createdat int(11)
 );
 
-create table file(
-    filename varchar(32),
+create table files(
+    local_path varchar(32),
     username varchar(32),
-    parent varchar(1024),
     service varchar(32),
     remote_id varchar(32),
-    modified_at int(11)
+    modified_at int(11),
+    shared_link varchar(128)
 );

@@ -8,14 +8,14 @@ package in.allmyspce.app.Model;
  * To change this template use File | Settings | File Templates.
  */
 public class DeleteFileRequest {
-    String username;
-    String localPath;
+    String uid;
+    String lid;
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public String getLocalPath() {
-        return localPath;
+    public String getLid() {
+        return lid;
     }
 }

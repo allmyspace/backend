@@ -9,24 +9,24 @@ package in.allmyspce.app.Model;
  */
 public class CreateFileRequest {
 
-    String username;
-    String localPath;
-    long created_at;
-    String remote_id;
+    String uid;
+    String lid;
+    long mt;
+    String rid;
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public String getLocalPath() {
-        return localPath;
+    public String getLid() {
+        return lid;
     }
 
-    public long getCreated_at() {
-        return created_at;
+    public long getMt() {
+        return mt;
     }
 
-    public String getRemote_id() {
-        return remote_id;
+    public String getRid() {
+        return rid;
     }
 }

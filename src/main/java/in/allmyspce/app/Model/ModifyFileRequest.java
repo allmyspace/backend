@@ -8,21 +8,21 @@ package in.allmyspce.app.Model;
  * To change this template use File | Settings | File Templates.
  */
 public class ModifyFileRequest {
-    String username;
-    String localPath;
-    long modified_at;
+    String uid;
+    String lid;
+    long mt;
 
 
-    public String getUsername() {
-        return username;
+    public String getUid() {
+        return uid;
     }
 
-    public String getLocalPath() {
-        return localPath;
+    public String getLid() {
+        return lid;
     }
 
-    public long getModified_at() {
-        return modified_at;
+    public long getMt() {
+        return mt;
     }
 
 }

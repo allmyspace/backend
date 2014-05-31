@@ -19,4 +19,5 @@ public class CustomUserDetailService implements UserDetailsService {
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
 }

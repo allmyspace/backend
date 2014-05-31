@@ -1,5 +1,8 @@
 package in.allmyspce.app;
 
+import com.dropbox.core.DbxAppInfo;
+import com.dropbox.core.DbxRequestConfig;
+import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,16 +25,36 @@ public class App extends WebMvcConfigurerAdapter {
 
 
     @Bean
-    public static JdbcTemplate jdbcTemplate(@Value("${db.server}") String serverName,
-                                            @Value("${db.port}") String portNumber,
-                                            @Value("${db.user}") String username,
-                                            @Value("${db.database}") String databaseName,
-                                            @Value("${db.password}") String password) throws PropertyVetoException {
+    public  JdbcTemplate jdbcTemplate(@Value("${db.url}") String url,
+                                            @Value("${db.driver}") String driver
+                                           ) throws PropertyVetoException {
 
-                         return null;
+        BasicDataSource dataSource=createDataSource(url,driver,1,1);
+        return new JdbcTemplate(dataSource);
+
     }
 
+    private BasicDataSource createDataSource(String url, String driver, int timeout, int poolSize) {
+        BasicDataSource dataSource = new BasicDataSource();
+        dataSource.setMaxActive(poolSize);
+        dataSource.setMaxWait(timeout);
+        dataSource.setPoolPreparedStatements(true);
+        dataSource.setValidationQuery("select 1");
 
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
+        return dataSource;
+
+    }
+    @Bean
+    public DbxAppInfo createDBAppinfo(){
+
+        return new DbxAppInfo("0iy80szhisdycxk","m3ulpaqq3rnrydp");
+    }
+    @Bean
+    public DbxRequestConfig createDbxRequestConfig(){
+        return new DbxRequestConfig("AllMySpaceDev/0.1", null);
+    }
 
 
 

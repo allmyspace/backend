@@ -1,6 +1,8 @@
 package in.allmyspce.app;
 
 import com.dropbox.core.*;
+import in.allmyspce.app.service.DbAuthStore;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,25 +23,31 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/dropbox/token")
 public class DropboxTokenController {
-    DbxWebAuth auth;
+    @Autowired
+    DbxAppInfo appInfo;
+    @Autowired
+    DbxRequestConfig requestConfig;
+    @Autowired
+    DbAuthStore dbAuthStore;
     @RequestMapping(method = RequestMethod.GET)
     public String printWelcome(HttpServletResponse response,ModelMap model,HttpSession session) throws IOException {
-        DbxRequestConfig requestConfig = new DbxRequestConfig("AllMySpaceDev/0.1", null);
-        DbxAppInfo appInfo = new DbxAppInfo("0iy80szhisdycxk","m3ulpaqq3rnrydp");
+
         String sessionKey = "dropbox-auth-csrf-token";
         DbxSessionStore csrfTokenStore = new DbxStandardSessionStore(session, sessionKey);
         String redirectUri = "http://localhost:8080/dropbox/token/tokenRedirect";
-        auth = new DbxWebAuth(requestConfig, appInfo, redirectUri, csrfTokenStore);
+        DbxWebAuth auth=new DbxWebAuth(requestConfig, appInfo, redirectUri, csrfTokenStore);
+        dbAuthStore.putAuth(session.getId(),auth);
         model.addAttribute("message", "Hello world!");
         String authorizePageUrl = auth.start();
         response.sendRedirect(authorizePageUrl);
         return "hello";
     }
     @RequestMapping(value = "/tokenRedirect",method = RequestMethod.GET)
-    public String OAuthRedirect(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap) throws IOException {
+    public String OAuthRedirect(HttpSession session,HttpServletRequest request,HttpServletResponse response,ModelMap modelMap) throws IOException {
+
         DbxAuthFinish authFinish = null;
         try {
-            authFinish = auth.finish(request.getParameterMap());
+            authFinish = dbAuthStore.getAuth(session.getId()).finish(request.getParameterMap());
         }
         catch (Exception e)
         {

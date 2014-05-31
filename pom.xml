@@ -11,6 +11,17 @@
         <spring.version>3.2.0.RELEASE</spring.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>google-api-services</id>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
+        </repository>
+        <repository>
+            <id>google-api-services-beta</id>
+            <url>http://google-api-client-libraries.appspot.com/mavenrepo</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -48,6 +59,42 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-drive</artifactId>
+            <version>v2-rev126-1.18.0-rc</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.bacoder.box</groupId>
+            <artifactId>box-java-sdk-v2</artifactId>
+            <version>1.0-201309071158-r</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-jackson2</artifactId>
+            <version>1.18.0-rc</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.18.0-rc</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-oauth2</artifactId>
+            <version>v2-rev70-1.18.0-rc</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-jackson</artifactId>
+            <version>1.15.0-rc</version>
         </dependency>
 
         <dependency>

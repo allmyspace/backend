@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+			http://www.springframework.org/schema/security
+			http://www.springframework.org/schema/security/spring-security-3.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <security:http auto-config="true" use-expressions="true" access-denied-page="/auth/denied">
+        <!--<security:custom-filter ref="customLoginFilter" position="FORM_LOGIN_FILTER"/>-->
+
+        <security:intercept-url pattern="/auth/login" access="permitAll"/>
+        <security:intercept-url pattern="/favicon.ico" access="permitAll"/>
+        <security:intercept-url pattern="/resources/**" access="permitAll"/>
+        <security:intercept-url pattern="/createUser/" access="permitAll"/>
+        <security:intercept-url pattern="/api/**" access="permitAll"/>
+        <security:intercept-url pattern="/token/grantAccess/*" access="hasRole('ROLE_USER')"/>
+        <security:intercept-url pattern="/dropbox/**" access="permitAll"/>
+        <security:intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>
+        <security:form-login
+                login-page="/auth/login"
+                authentication-failure-url="/auth/login?error=true"
+                />
+
+        <security:logout
+                invalidate-session="true"
+                logout-success-url="/auth/login"
+                logout-url="/auth/logout"/>
+        </security:http>
+        <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider user-service-ref="customUserDetailService">
+        </security:authentication-provider>
+        </security:authentication-manager>
+
+    <bean id="customUserDetailService" class="in.allmyspce.app.service.CustomUserDetailService"/>
+
+    <!--<bean id="customLoginFilter" class="com.springapp.mvc.Service.CustomLoginFilter"></bean>-->
+
+
+</beans>

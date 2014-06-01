@@ -2,9 +2,13 @@ package in.allmyspce.app;
 
 import com.box.boxjavalibv2.BoxClient;
 import com.box.boxjavalibv2.requests.requestobjects.BoxOAuthRequestObject;
+import in.allmyspce.app.DAO.UserDao;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.omg.DynamicAny.NameValuePair;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -23,9 +27,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -57,17 +61,30 @@ public class boxController {
     }
 
     @RequestMapping(value = "accept", method = RequestMethod.GET)
-    public String getToken(@RequestParam(value = "code") String code, HttpServletRequest httpRequest) throws IOException {
+    public String getToken(@RequestParam(value = "code") String code, HttpServletRequest httpRequest) throws IOException, ParseException {
         String url = "https://www.box.com/api/oauth2/token";
+        String username = "test";
+        String urlParameters = "grant_type=authorization_code&code=" + code + "&client_id=" + CLIENT_ID+"&client_secret="+CLIENT_SECRET;
+        JSONObject jsonObject = getJsonResultFromPost(urlParameters, url);
+        UserDao userDao = new UserDao();
+        long expiryTime = 3500;
+        long time = -1;
+        time = userDao.getBoxAccessTokenCreationDate(username);
+        long currTime = System.currentTimeMillis() / 1000l;
+        if(time != -1 && (currTime-3500) >= time){
+            String accessToken = refreshAccessToken();
+        }else{
+            userDao.setBoxToken(jsonObject.get("access_token").toString(), jsonObject.get("refresh_token").toString(), username);
+        }
+        return "hello";
+    }
+
+    private JSONObject getJsonResultFromPost(String urlParameters, String url) throws IOException, ParseException {
         URL obj = new URL(url);
         HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
         con.setRequestMethod("POST");
         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-
-        String urlParameters = "grant_type=authorization_code&code=" + code + "&client_id=" + CLIENT_ID+"&client_secret="+CLIENT_SECRET;
-
-        // Send post request
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
         wr.writeBytes(urlParameters);
@@ -82,10 +99,21 @@ public class boxController {
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(response.toString());
         in.close();
+        return jsonObject;
+    }
 
-        //print result
-        System.out.println(response.toString());
-        return "hello";
+    @RequestMapping(value = "refreshtoken", method = RequestMethod.GET)
+    public String refreshAccessToken() throws IOException, ParseException {
+        String url = "https://www.box.com/api/oauth2/token";
+        String username = "India";
+        UserDao userDao = new UserDao();
+        String refreshToken = userDao.getBoxRefreshToken(username);
+        String urlParameters = "grant_type=refresh_token&refresh_token=" + refreshToken + "&client_id=" + CLIENT_ID+"&client_secret="+CLIENT_SECRET;
+        JSONObject jsonObject = getJsonResultFromPost(urlParameters, url);
+        userDao.setBoxToken(jsonObject.get("access_token").toString(), jsonObject.get("refresh_token").toString(), username);
+        return jsonObject.get("access_token").toString();
     }
 }

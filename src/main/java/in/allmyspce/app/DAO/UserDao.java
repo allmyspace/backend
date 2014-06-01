@@ -29,10 +29,14 @@ public class UserDao {
       template.update("update users set dropboxtoken=?,dropboxtoken_created_at=? where username=?",
               token,System.currentTimeMillis()/1000,username);
     }
-    public void setBoxToken(String token,String username)
+    public void setBoxToken(String token, String refreshToken, String username)
     {
-        template.update("update users set boxtoken=?,boxtoken_created_at=? where username=?",
+        template.update("update users set boxtoken=?, refresh_token=?, boxtoken_created_at=? where username=?",
                 token,System.currentTimeMillis()/1000,username);
+    }
+
+    public String getBoxRefreshToken(String username){
+        return template.queryForObject("select refresh_token from users where username=?",String.class, username);
     }
     public String getDropboxToken(String username)
     {
@@ -48,9 +52,13 @@ public class UserDao {
             @Override
             public DBUser mapRow(ResultSet resultSet, int i) throws SQLException {
             return new DBUser(resultSet.getString("username"),resultSet.getString("password"),
-                    resultSet.getString("dropboxtoken"),resultSet.getString("boxtoken"),
-                    resultSet.getString("dropboxtoken_created_at"),resultSet.getString("boxtoken_created_at"));
+                    resultSet.getString("dropboxtoken"),resultSet.getString("boxtoken"), resultSet.getString("box_refresh_token"),
+                    resultSet.getLong("dropboxtoken_created_at"),resultSet.getLong("boxtoken_created_at"));
             }
         },username);
+    }
+
+    public long getBoxAccessTokenCreationDate(String username) {
+        return Long.parseLong(template.queryForObject("select boxtoken_createdat from users where username=?",String.class,username));
     }
 }

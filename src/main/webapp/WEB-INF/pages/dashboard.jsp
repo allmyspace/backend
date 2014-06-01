@@ -35,17 +35,20 @@
             </button>
             <a class="navbar-brand" href="#">AllMySpace</a>
         </div>
-        <%--<div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Dashboard</a></li>
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Profile</a></li>
-                <li><a href="#">Help</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Services<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/dropbox/token">DropBox</a></li>
+                        <li><a href="/box/login">Box.com</a></li>
+                    </ul>
+                </li>
+                <li><a href="/auth/logout">Logout</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
-        </div>--%>
+
+        </div>
     </div>
 </div>
 
@@ -57,7 +60,7 @@
         <div>
             <h1 class="page-header">Dashboard</h1>
             <div >
-                    <canvas id="mySpaceChart" width="400px" height="400px" class="col-md-1 col-md-offset-5"></canvas>
+                    <canvas id="mySpaceChart" width="300px" height="200px" class="col-md-1 col-md-offset-4"></canvas>
             </div>
 
             <h2 class="sub-header">Section title</h2>

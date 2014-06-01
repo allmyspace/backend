@@ -17,9 +17,9 @@
             <div class="account-wall">
                 <img class="profile-img" src="http://s3.amazonaws.com/hackathon-io/profiles/images/000/030/905/thumb/icon.png?1401515206"
                      alt="">
-                <form class="form-signin"  action="../../j_spring_security_check" method="post" >
-                    <input type="text" class="form-control" id="j_username" name="j_username" placeholder="Username" required autofocus>
-                    <input type="password" class="form-control"  id="j_password" name="j_password" placeholder="Password" required>
+                <form class="form-signin"  action="submitLogin" method="post" >
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required autofocus>
+                    <input type="password" class="form-control"  id="password" name="password" placeholder="Password" required>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
 
                 </form>

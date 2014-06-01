@@ -12,14 +12,16 @@ public class DBUser {
     String password;
     String dropboxtoken;
     String boxtoken;
-    String dropboxtoken_created_at;
-    String boxtoken_created_at;
+    String boxrefreshtoken;
+    long dropboxtoken_created_at;
+    long boxtoken_created_at;
 
-    public DBUser(String username, String password, String dropboxtoken, String dropboxtoken_created_at, String boxtoken, String boxtoken_created_at) {
+    public DBUser(String username, String password, String dropboxtoken,String boxtoken, String boxrefreshtoken, long dropboxtoken_created_at, long boxtoken_created_at) {
         this.username = username;
         this.password = password;
         this.dropboxtoken = dropboxtoken;
         this.dropboxtoken_created_at = dropboxtoken_created_at;
+        this.boxrefreshtoken = boxrefreshtoken;
         this.boxtoken = boxtoken;
         this.boxtoken_created_at = boxtoken_created_at;
     }
@@ -40,11 +42,19 @@ public class DBUser {
         return boxtoken;
     }
 
-    public String getDropboxtoken_created_at() {
+    public long getDropboxtoken_created_at() {
         return dropboxtoken_created_at;
     }
 
-    public String getBoxtoken_created_at() {
+    public long getBoxtoken_created_at() {
         return boxtoken_created_at;
+    }
+
+    public String getBoxrefreshtoken() {
+        return boxrefreshtoken;
+    }
+
+    public void setBoxrefreshtoken(String boxrefreshtoken) {
+        this.boxrefreshtoken = boxrefreshtoken;
     }
 }

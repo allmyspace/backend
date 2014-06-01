@@ -25,7 +25,7 @@ import java.net.URL;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/box")
+@RequestMapping("/box/")
 public class boxController {
 
     private static String CLIENT_ID = "fqh2onk3sw4qjj5uk5ykembdcxa2qtd5";
@@ -58,7 +58,7 @@ public class boxController {
         JSONObject jsonObject = boxTokenService.getJsonResultFromPost(urlParameters, url);
 
             userDao.setBoxToken(jsonObject.get("access_token").toString(), jsonObject.get("refresh_token").toString(), username);
-        response.sendRedirect("/hello");
+        response.sendRedirect("/dashboard");
         return "hello";
     }
 

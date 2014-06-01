@@ -28,7 +28,7 @@ public class AuthController {
     public String getLoginUser(String username,String password,HttpSession session,ModelMap modelMap,HttpServletResponse response) throws IOException {
         session.setAttribute("username",username);
         modelMap.put("message",session.getAttribute("username"));
-        response.sendRedirect("/hello");
+        response.sendRedirect("/dashboard");
         return "result";
 
     }

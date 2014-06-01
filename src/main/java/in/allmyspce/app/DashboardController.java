@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @Controller
 @RequestMapping("/dashboard")
@@ -20,8 +22,15 @@ public class DashboardController {
     FileDAO fileDAO;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView printWelcome(HttpSession httpSession, ModelMap modelMap) {
-        modelMap.put("fileList", fileDAO.getDirectory((String) httpSession.getAttribute("username")));
-        return new ModelAndView("dashboard", modelMap);
+    public ModelAndView printWelcome(HttpServletResponse response,HttpSession httpSession, ModelMap modelMap) throws IOException {
+        if(httpSession.getAttribute("username")!=null)
+        { String username=(String)httpSession.getAttribute("username");
+        modelMap.put("fileList", fileDAO.getDirectory(username));//
+        return new ModelAndView("dashboard", modelMap); }
+        else
+        {
+         response.sendRedirect("localhost:8080/auth/login");
+         return new ModelAndView("result");
+        }
     }
 }

@@ -11,7 +11,7 @@ public class CreateFileRequest {
 
     String uid;
     String lid;
-    long mt;
+    long ct;
     String rid;
 
     public String getUid() {
@@ -22,8 +22,8 @@ public class CreateFileRequest {
         return lid;
     }
 
-    public long getMt() {
-        return mt;
+    public long getCt() {
+        return ct;
     }
 
     public String getRid() {

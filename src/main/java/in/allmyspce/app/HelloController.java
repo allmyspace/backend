@@ -15,7 +15,7 @@ public class HelloController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String printWelcome(ModelMap model,HttpSession session,HttpServletResponse response) throws IOException {
         if(session.getAttribute("username")!=null)
-            response.sendRedirect("/hello");
+            response.sendRedirect("/dashboard");
         else
             response.sendRedirect("/auth/login");
 		model.addAttribute("message", "Hello world!");

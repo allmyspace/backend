@@ -20,7 +20,7 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class TokenApiController {
     private static String CLIENT_ID = "fqh2onk3sw4qjj5uk5ykembdcxa2qtd5";
     private static String CLIENT_SECRET = "8wNFvWkBi0JslKhE3TNFUwZaM0N3NbkE";
@@ -60,6 +60,8 @@ public class TokenApiController {
             };
     }
     private String getTokenForBox(String username) throws IOException, ParseException {
+        if(userDao.getBoxToken(username)==null)
+            return "";
         Long time = userDao.getBoxAccessTokenCreationDate(username);
         long currTime = System.currentTimeMillis() / 1000l;
         if(time != -1 && (currTime-3500) >= time){

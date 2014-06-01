@@ -19,27 +19,29 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/api/")
+@RequestMapping("/api")
 public class FileAPIController {
     @Autowired
     FileDAO fileDAO;
     @RequestMapping(value="create/{service}",method = RequestMethod.POST,consumes = "application/json")
     public String createFile(@RequestBody CreateFileRequest request, @PathVariable String service){
 
+        if(!request.getLid().contains(".poll"))  {
         fileDAO.createFile(request.getLid(),request.getUid(),
-                service,request.getRid(),request.getMt());
+                service,request.getRid(),request.getCt()); }
 
         return "result";
     }
     @RequestMapping(value="modify/{service}",method = RequestMethod.POST,consumes = "application/json")
     public String modifyFile(@RequestBody ModifyFileRequest request, @PathVariable String service){
-
-        fileDAO.modifyFile(request.getLid(),request.getUid(),request.getMt());
+        if(!request.getLid().contains(".poll"))
+        {fileDAO.modifyFile(request.getLid(),request.getUid(),request.getMt()); }
         return "result";
     }
     @RequestMapping(value="delete/{service}",method = RequestMethod.POST,consumes = "application/json")
     public String deleteFile(@RequestBody DeleteFileRequest request, @PathVariable String service){
-        fileDAO.deleteFile(request.getLid(), request.getUid(),service);
+        if(!request.getLid().contains(".poll"))
+        { fileDAO.deleteFile(request.getLid(), request.getUid(),service); }
         return "result";
     }
     @RequestMapping(value = "directory/{username}",method = RequestMethod.GET,produces = "application/json")

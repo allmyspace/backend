@@ -45,7 +45,7 @@ public class DropboxTokenController {
         response.sendRedirect(authorizePageUrl);
         return "hello";
     }
-    @RequestMapping(value = "/tokenRedirect",method = RequestMethod.GET)
+    @RequestMapping(value = "tokenRedirect",method = RequestMethod.GET)
     public String OAuthRedirect(HttpSession session,HttpServletRequest request,HttpServletResponse response,ModelMap modelMap) throws IOException {
 
         DbxAuthFinish authFinish = null;
@@ -61,7 +61,8 @@ public class DropboxTokenController {
         String accessToken = authFinish.accessToken;
         userDao.setDropboxToken(accessToken, (String) session.getAttribute("username"));
         modelMap.put("token", accessToken);
-        response.sendRedirect("/hello");
+        DbxClient client;
+        response.sendRedirect("/dashboard");
         return "hello";
     }
 }

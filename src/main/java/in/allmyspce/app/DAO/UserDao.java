@@ -61,4 +61,8 @@ public class UserDao {
     public long getBoxAccessTokenCreationDate(String username) {
         return template.queryForLong("select boxtoken_createdat from users where username=?",username);
     }
+
+    public void addDropboxShareURL(String username, String id, String url) {
+        template.update("update files set shared_link=? where username=? and remote_id=?",url,username,id);
+    }
 }

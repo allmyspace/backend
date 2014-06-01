@@ -16,21 +16,22 @@ import java.util.HashMap;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/")
 public class TokenApiController {
     @Autowired
     UserDao userDao;
     @RequestMapping(value="token/{service}/{username}",method = RequestMethod.GET,produces = "application/json")
     @ResponseBody
     public HashMap<String, String> getToken(@PathVariable String service, @PathVariable final String username){
-        if(service=="dropbox")
+        System.out.println("service "+service);
+        if(service.equals("dropbox"))
         {
             return new HashMap<String,String>(){
                 { put("token",userDao.getDropboxToken(username));
                     }
             };
         }
-       else if(service=="box")
+       else if(service.equals("box"))
         {
             return new HashMap<String,String>(){
                 { put("token",userDao.getBoxToken(username));
@@ -41,7 +42,7 @@ public class TokenApiController {
     }
     @RequestMapping(value="tokens/{username}",method = RequestMethod.GET,produces = "application/json")
     @ResponseBody
-    public HashMap<String, String> getTokens(@PathVariable String service, @PathVariable final String username){
+    public HashMap<String, String> getTokens( @PathVariable final String username){
 
               return new HashMap<String,String>(){
                 { put("dropbox",userDao.getDropboxToken(username));

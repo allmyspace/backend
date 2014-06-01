@@ -32,11 +32,11 @@ public class UserDao {
     }
     public String getDropboxToken(String username)
     {
-        return template.queryForObject("select dropboxtoken where username=?",String.class,username);
+        return template.queryForObject("select dropboxtoken from users where username=?",String.class,username);
     }
     public String getBoxToken(String username)
     {
-        return template.queryForObject("select boxtoken where username=?",String.class,username);
+        return template.queryForObject("select boxtoken from users where username=?",String.class,username);
     }
     public DBUser getUserByUsername(String username)
     {

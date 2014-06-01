@@ -81,7 +81,7 @@
                         for(HashMap<String, Object> result : myMap){
                             String path =  result.get("ty").equals("box") ? box : dropBox;
                             int t = result.get("ty").equals("box") ? boxFreq++ : dropBoxFreq++;
-
+                            String shareApi = result.get("ty").equals("box") ? "/share/box/"+result.get("rid") : "/share/dropbox/"+result.get("rid");
 
 
 
@@ -93,6 +93,9 @@
                         <td>
                             <span class="span8"><strong><%out.print(result.get("lid"));%></strong></span>
                         </td>
+                        <%--<td>
+                            <button class="btn btn-primary shareModal" data-toggle="modal" href="<%out.print(shareApi);%>" data-target="#myModal">Share</button>
+                        </td>--%>
                     </tr>
                     <%
                         }
@@ -123,6 +126,28 @@
 </div>
 </div>
 
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Share url</h4>
+
+            </div>
+            <div class="modal-body"><div class="te"></div></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
 </body>
 
 <script type="application/javascript" src="/resources/js/Chart.min.js"></script>
@@ -130,6 +155,18 @@
 
 
     $(document).ready(function(){
+
+        $(".shareModal").click(function(e){
+            e.preventDefault();
+
+            $.ajax({
+                url : $(this).attr("href"),
+
+            }).done(function(data){
+                console.log(data);
+            })
+
+        })
 
         var data = [
             {

@@ -3,7 +3,6 @@ package in.allmyspce.app;
 import in.allmyspce.app.DAO.FileDAO;
 import in.allmyspce.app.Model.CreateFileRequest;
 import in.allmyspce.app.Model.DeleteFileRequest;
-import in.allmyspce.app.Model.FileDetails;
 import in.allmyspce.app.Model.ModifyFileRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

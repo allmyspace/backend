@@ -21,7 +21,7 @@ public class DashboardController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView printWelcome(HttpSession httpSession, ModelMap modelMap) {
-        modelMap.put("fileList", fileDAO.getDirectory("test"));//(String) httpSession.getAttribute("username")));
+        modelMap.put("fileList", fileDAO.getDirectory((String) httpSession.getAttribute("username")));
         return new ModelAndView("dashboard", modelMap);
     }
 }

@@ -48,4 +48,19 @@ public class FileDAO {
         },username, service);
 
     }
+    public List<HashMap<String, Object>> getDirectory( String username) {
+        return template.query("Select * from files where username=? ",new RowMapper<HashMap<String, Object>>() {
+            @Override
+            public HashMap<String, Object> mapRow(ResultSet resultSet, int i) throws SQLException {
+                HashMap<String,Object> result=new HashMap<>();
+                result.put("rid",resultSet.getString("remote_id"));
+                result.put("lid",resultSet.getString("local_path"));
+                result.put("mt",resultSet.getLong("modified_at"));
+                result.put("sl",resultSet.getString("shared_link"));
+                result.put("ty",resultSet.getString("service"));
+                return result;
+            }
+        },username);
+
+    }
 }

@@ -59,16 +59,23 @@
 
         <div>
             <h1 class="page-header">Dashboard</h1>
-            <div >
+            <div class="row-fluid">
+                <div class="col-md-3 col-md-offset-3" style="background-color: dimgray;width:81px">
+                    <div class="" style="color: #F38630;width:50px"> DropBox</div>
+                    <div class="" style="color: #E0E4CC"> Box.com</div>
+                </div>
+                <div class="col-xs-6">
                     <canvas id="mySpaceChart" width="300px" height="200px" class="col-md-1 col-md-offset-4"></canvas>
-            </div>
+                </div>
 
-            <h2 class="sub-header">Section title</h2>
+            </div>
+            <br/>
+
             <div>
                 <table class="table table-striped table-hover">
                     <thead>
                     <tr>
-                        <th>MySpace ...</th>
+                        <th><h1>MySpace ...</h1></th>
                     </tr>
                     </thead>
                     <tbody>

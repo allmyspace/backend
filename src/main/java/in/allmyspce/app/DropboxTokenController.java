@@ -1,6 +1,7 @@
 package in.allmyspce.app;
 
 import com.dropbox.core.*;
+import in.allmyspce.app.DAO.UserDao;
 import in.allmyspce.app.service.DbAuthStore;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,8 @@ public class DropboxTokenController {
     DbxRequestConfig requestConfig;
     @Autowired
     DbAuthStore dbAuthStore;
+    @Autowired
+    UserDao userDao;
     @RequestMapping(method = RequestMethod.GET)
     public String printWelcome(HttpServletResponse response,ModelMap model,HttpSession session) throws IOException {
 
@@ -56,7 +59,9 @@ public class DropboxTokenController {
         }
         assert authFinish != null;
         String accessToken = authFinish.accessToken;
-        modelMap.put("token",accessToken);
-        return "redirected";
+        userDao.setDropboxToken(accessToken, (String) session.getAttribute("username"));
+        modelMap.put("token", accessToken);
+        response.sendRedirect("/hello");
+        return "hello";
     }
 }

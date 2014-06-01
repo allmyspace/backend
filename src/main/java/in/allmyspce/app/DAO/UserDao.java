@@ -31,12 +31,12 @@ public class UserDao {
     }
     public void setBoxToken(String token, String refreshToken, String username)
     {
-        template.update("update users set boxtoken=?, refresh_token=?, boxtoken_created_at=? where username=?",
-                token,System.currentTimeMillis()/1000,username);
+        template.update("update users set boxtoken=?, box_refresh_token=?, boxtoken_createdat=? where username=?",
+                token,refreshToken,System.currentTimeMillis()/1000,username);
     }
 
     public String getBoxRefreshToken(String username){
-        return template.queryForObject("select refresh_token from users where username=?",String.class, username);
+        return template.queryForObject("select box_refresh_token from users where username=?",String.class, username);
     }
     public String getDropboxToken(String username)
     {
@@ -59,6 +59,6 @@ public class UserDao {
     }
 
     public long getBoxAccessTokenCreationDate(String username) {
-        return Long.parseLong(template.queryForObject("select boxtoken_createdat from users where username=?",String.class,username));
+        return template.queryForLong("select boxtoken_createdat from users where username=?",username);
     }
 }

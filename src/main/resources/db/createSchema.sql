@@ -3,6 +3,7 @@ username varchar(32),
 password varchar(32),
 dropboxtoken varchar(124),
 boxtoken varchar(124),
+box_refresh_token varchar(124),
 created_at int(11),
 dropboxtoken_created_at int(11),
 boxtoken_createdat int(11)

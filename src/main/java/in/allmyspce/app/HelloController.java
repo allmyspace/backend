@@ -27,4 +27,9 @@ public class HelloController {
         model.addAttribute("message", "Hello world!");
         return "hello";
     }
+    @RequestMapping(value = "addServices",method = RequestMethod.GET)
+    public String addServices() throws IOException {
+
+        return "addServices";
+    }
 }

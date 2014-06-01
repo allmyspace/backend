@@ -19,6 +19,10 @@ import java.sql.SQLException;
 @Repository
 public class UserDao {
     @Autowired
+    public void setJdbcTemplate(JdbcTemplate jdbcTemplate)
+    {
+        this.template=jdbcTemplate;
+    }
     JdbcTemplate template;
     public void setDropboxToken(String token,String username)
     {
